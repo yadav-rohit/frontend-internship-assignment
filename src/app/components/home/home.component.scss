@@ -1,0 +1,54 @@
+.header {
+  @apply
+  tw-flex
+  tw-flex-row
+  tw-justify-between
+  tw-items-center
+  tw-rounded-4-px
+  tw-p-12-px
+  tw-m-24-px;
+  background: linear-gradient(146deg, #e1eeff 19.67%, #ffe4fb 127.56%);
+}
+
+.search-button {
+  @apply
+  tw-border 
+  tw-border-solid 
+  tw-border-dark-border
+  tw-rounded-4-px
+  tw-flex
+  tw-justify-center
+  tw-items-center
+}
+
+.loading-animation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-weight: bold;
+  font-size: 20px;
+  color: #888;
+}
+
+.trending-subjects {
+  @apply
+  tw-p-12-px
+  tw-rounded-4-px
+  tw-shadow-lg
+  tw-w-fit
+  tw-mx-auto
+  tw-border-solid 
+  tw-border-[2px]
+  tw-border-slate-300
+  tw-backdrop-blur-md;
+  background: linear-gradient(146deg, #e1eeff 19.67%, #ffe4fb 127.56%);
+}
+table{
+  background: linear-gradient(146deg, #e1eeff 19.67%, #ffe4fb 127.56%);
+}
+table{
+th{
+color: #ffe4fb;
+}
+}

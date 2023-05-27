@@ -1,0 +1,72 @@
+<div class="header">
+  <div class="tw-text-24-px tw-font-600">Open Books Library</div>
+  <div class="search-button tw-flex tw-px-2 tw-py-4 tw-rounded-md">
+    <mat-icon class="" aria-label="Search Icon ">search</mat-icon>
+    <input [formControl]="bookSearch" name="searchKey" type="text" placeholder="Search Books"
+      class="tw-border-0 tw-w-[80%] tw-bg-transparent tw-outline-none">
+    <!-- <button mat-icon-button class=" tw-bg-transparent tw-border-0" (click)="clearSearch()"> -->
+    <mat-icon aria-label="Clear Icon" (click)="clearSearch()">clear</mat-icon>
+    <!-- </button> -->
+  </div>
+</div>
+
+<div class="tw-flex tw-flex-col tw-h-auto tw-m-24-px">
+  <section class="trending-subjects">
+    <div class="tw-font-600 tw-text-20-px tw-text-center">Trending Subjects</div>
+    <ul class=" tw-flex  tw-flex-wrap tw-justify-center tw-list-none tw-pl-0">
+      <li class="tw-text-16-px tw-cursor-pointer tw-p-4" *ngFor="let subject of trendingSubjects"
+        routerLink="/trending-subject/{{ subject.name }}">
+        {{ subject.name }}
+      </li>
+    </ul>
+  </section>
+  <div class="tw-flex tw-flex-col ">
+    <div *ngIf="isLoading" class="loading-animation">Loading...</div>
+    <div *ngIf="!books.length"
+      class="loading-animation">No books
+      found.</div>
+    <table *ngIf="!isLoading && books.length " class=" tw-table-auto tw-w-full tw-min-h-[40vh] tw-mt-8 tw-shadow-md tw-rounded-lg tw-overflow-hidden  tw-border-solid 
+    tw-border-[2px] 
+    tw-border-slate-400 tw-border-spacing-0 ">
+      <thead>
+        <tr>
+          <th class="tw-bg-slate-800 tw-px-4 tw-py-2  tw-border-solid 
+  tw-border-[1px] tw-border-slate-600 ">Title</th>
+          <th class="tw-bg-slate-800 tw-px-4 tw-py-2 tw-border-solid 
+  tw-border-[1px] tw-border-slate-600 tw-w-auto  ">Author</th>
+          <th class="tw-bg-slate-800 tw-px-4 tw-py-2 tw-border-solid 
+  tw-border-[1px] tw-border-slate-600  ">Year of Publication</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let book of getPaginatedBooks()">
+          <td class=" tw-px-4 tw-py-2  tw-border-solid 
+  tw-border-[1px] tw-border-slate-600 ">
+            <a href="https://openlibrary.org/{{book.seed[1]}}" class=" tw-text-blue-400 tw-font-normal"
+              target="_blank">{{ book.title }}</a>
+          </td>
+          <td class="tw-px-4 tw-py-2 tw-border-solid 
+  tw-border-[1px] tw-border-slate-600 ">{{ book.author_name }}</td>
+          <td class="tw-px-4 tw-py-2 tw-border-solid 
+  tw-border-[1px] tw-border-slate-600 ">{{ book.first_publish_year }}</td>
+        </tr>
+      </tbody>
+
+    </table>
+    <div class="flex justify-center mt-4">
+      <input [(ngModel)]="itemsPerPage" (ngModelChange)="onEntriesPerPageChange($event)"
+        class="tw-mt-2 tw-bg-transparent tw-outline-none tw-border-slate-500 tw-rounded-md" type="number" id="numberr"
+        name="numberr" min="0" max="10">
+      <nav *ngIf="books.length > itemsPerPage" class="tw-flex tw-rounded-md tw-flex-wrap tw-mb-10">
+        <button [disabled]="currentPage === 1" (click)="onPageChange(currentPage - 1)"
+          class="tw-px-3 tw-py-2   tw-text-sm tw-font-medium tw-text-white tw-bg-transparent tw-rounded-l-md tw-shadow-md">&larr;</button>
+        <button *ngFor="let page of getPaginationRange()" (click)="onPageChange(page)"
+          [class.active]="currentPage === page"
+          class="tw-px-2 tw-py-1 tw-flex  tw-justify-items-center tw-text-center tw-text-xs tw-text-white tw-bg-transparent tw-shadow-md">{{ page
+          }}</button>
+        <button [disabled]="currentPage === getTotalPages()" (click)="onPageChange(currentPage + 1)"
+          class="tw-px-3 tw-py-2  tw-text-sm tw-font-medium tw-text-white tw-bg-transparent tw-rounded-r-md tw-shadow-md">&rarr;</button>
+      </nav>
+    </div>
+  </div>
+</div>
